@@ -26,7 +26,7 @@ app.get('/', (req, res)=>{
     res.status(200).json({message: welcome })
 })
 
-//resgiter create user
+//1a register / create user
 app.post('/create-user', async (req, res) => {
     try {
       const { username, email, password, wallet_balance, role } = req.body;
@@ -74,20 +74,8 @@ app.post('/create-user', async (req, res) => {
     }
   });
   
-  app.get('/users', async (req, res)=>{
 
-    const users = await User.find();
-    if(!users)
-      res.status(400).json({
-        message: 'There is no user in the database'
-    })
-     
-    res.status(200).json({
-      email: users
-    })
-
-  })
-
+//1b user login
   app.post("/login", async (req, res)=>{
 
     const { email, password } = req.body
@@ -139,7 +127,7 @@ app.post('/create-user', async (req, res) => {
 })
 
 
-// POST /admin/create-event
+//2. POST /admin/create-game
 app.post('/create-game', async (req, res) => {
     try {
       const { name, sport, startTime, status, outcomes } = req.body;
@@ -148,7 +136,7 @@ app.post('/create-game', async (req, res) => {
         return res.status(400).json({ message: 'Missing required fields or outcomes' });
       }
   
-      // Create event
+      // Create game
       const game = new Game({ name, sport, startTime, status });
       await game.save();
   
@@ -182,7 +170,20 @@ app.post('/create-game', async (req, res) => {
     }
   });
 
+    // To get all users
+    app.get('/users', async (req, res)=>{
+
+      const users = await User.find();
+      if(!users)
+        res.status(400).json({
+          message: 'There is no user in the database'
+      })
+       
+      res.status(200).json({
+        email: users
+      })
   
+    })
 
 
 mongoose.connect(MONGO_URI)
