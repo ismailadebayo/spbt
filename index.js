@@ -74,6 +74,19 @@ app.post('/create-user', async (req, res) => {
     }
   });
   
+  app.get('/users', async (req, res)=>{
+
+    const users = await User.find();
+    if(!users)
+      res.status(400).json({
+        message: 'There is no user in the database'
+    })
+     
+    res.status(200).json({
+      email: users
+    })
+
+  })
 
   app.post("/login", async (req, res)=>{
 
