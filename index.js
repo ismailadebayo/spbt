@@ -128,32 +128,32 @@ app.post('/create-user', async (req, res) => {
 
 
 //2. POST /admin/create-game
-app.post('/create-game', async (req, res) => {
+app.post('/admin/create-game', async (req, res) => {
     try {
-      const { name, sport, startTime, status, outcomes } = req.body;
+      const { name, sport, startTime, outcomes } = req.body;
   
-      if (!name || !sport || !startTime || !status || !outcomes || !Array.isArray(outcomes)) {
+      if (!name || !sport || !startTime || !outcomes || !Array.isArray(outcomes)) {
         return res.status(400).json({ message: 'Missing required fields or outcomes' });
       }
   
       // Create game
-      const game = new Game({ name, sport, startTime, status });
+      const game = new Game({ name, sport, startTime});
       await game.save();
   
       // Create outcomes with odds
       const outcomeDocs = await Promise.all(outcomes.map(async (outcome) => {
         const { type, odds } = outcome;
         if (!type || !odds) throw new Error('Each outcome must have type and odds');
-        return await new Outcome({ event: game._id, type, odds }).save();
+        return await new Outcome({ game: game._id, type, odds }).save();
       }));
   
-      // Attach outcomes to event
-      event.outcomes = outcomeDocs.map(o => o._id);
-      await event.save();
+      // Attach outcomes to game
+      game.outcomes = outcomeDocs.map(o => o._id);
+      await game.save();
   
       res.status(201).json({
-        message: 'Event and odds created successfully',
-        event: {
+        message: 'Game and odds created successfully',
+        game: {
           id: game._id,
           name: game.name,
           sport: game.sport,
