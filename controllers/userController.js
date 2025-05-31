@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 
 const User = require('./models/userSchema')
 
-
+// module one of project 5 (question 1) - create user with login balanc
 const createUser = async (req, res) => {
     try {
       const { username, email, password, wallet_balance, role } = req.body;
@@ -52,7 +52,7 @@ const createUser = async (req, res) => {
   }
 
 
-
+// module one of project 5 (question 1) - create login
   const userLogin = async (req, res)=>{
   
       const { email, password } = req.body

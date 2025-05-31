@@ -3,7 +3,8 @@ const User = require('../models/userSchema');
 const Game = require('../models/gameSchema');
 const Outcome = require('../models/outcomeSchema');
 
-
+// module two of project 5 (question 1 & 3) - user place bet on available bet
+//  and deduct stake from wallet and record bet
 const placeBet = async (req, res) => {
   try {
     const userId = req.user?._id; // Assumes auth middleware sets req.user
@@ -20,7 +21,7 @@ const placeBet = async (req, res) => {
       return res.status(400).json({ message: 'Insufficient wallet balance' });
     }
 
-    const event = await Game.findById(eventId);
+    const event = await Game.findById(gameId);
     if (!event || event.status !== 'upcoming') {
       return res.status(400).json({ message: 'Invalid or closed event' });
     }
@@ -65,7 +66,41 @@ const placeBet = async (req, res) => {
   }
 }
 
+//module 3 of project 5 (Question 3) - view bet result
+const betResult = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    const { betId } = req.params;
 
+    const bet = await Bet.findById(betId)
+      .populate('game')
+      .populate('outcome');
+
+    if (!bet) return res.status(404).json({ message: 'Bet not found' });
+
+    // Make sure the user owns this bet
+    if (bet.user.toString() !== userId.toString()) {
+      return res.status(403).json({ message: 'Unauthorized access to this bet' });
+    }
+
+    res.status(200).json({
+      betId: bet._id,
+      event: bet.game.name,
+      eventStatus: bet.event.status,
+      outcomeSelected: bet.outcome.type,
+      odds: bet.odds,
+      stake: bet.stake,
+      potentialPayout: bet.potentialPayout,
+      result: bet.status, // pending / won / lost
+      placedAt: bet.placedAt
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+//module 3 of project 5 (Question 3) - view bet history
 
 const betHistory = async (req, res) => {
   try {
@@ -77,7 +112,7 @@ const betHistory = async (req, res) => {
 
     const formatted = bets.map(bet => ({
       id: bet._id,
-      event: bet.event.name,
+      game: bet.game.name,
       outcome: bet.outcome.type,
       stake: bet.stake,
       odds: bet.odds,
@@ -94,5 +129,6 @@ const betHistory = async (req, res) => {
 
 module.exports ={
     placeBet, 
-    betHistory
+    betHistory,
+    betResult
 }

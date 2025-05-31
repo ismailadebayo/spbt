@@ -1,3 +1,5 @@
+// module one of project 5 (question 3) - create user and game schema
+
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({

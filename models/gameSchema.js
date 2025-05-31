@@ -1,3 +1,4 @@
+// module one of project 5 (question 3) -  game schema
 const mongoose = require('mongoose');
 
 const gameSchema = new mongoose.Schema({

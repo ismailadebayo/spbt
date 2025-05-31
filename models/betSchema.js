@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-
+// module two of project 5 (question 2) - create bet scheme
 const betSchema = new mongoose.Schema({
   user:     { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   outcome:  { type: mongoose.Schema.Types.ObjectId, ref: 'Outcome', required: true },

@@ -1,6 +1,8 @@
 const Game = require('../models/Game');
 const Outcome = require('../models/Outcome');
 
+// module three of project 5 (question 1) - set game result
+
 const gameResult = async (req, res) => {
    
   try {

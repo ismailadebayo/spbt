@@ -3,6 +3,7 @@ const Outcome = require('../models/Outcome');
 const Bet = require('../models/Bet');
 const User = require('../models/User');
 
+// module three of project 5 (question 2) - calculate payout and update wallet
 const payOut =  async (req, res) => {
   try {
     const { gameId, winningOutcomeId } = req.body;
@@ -47,7 +48,7 @@ const payOut =  async (req, res) => {
   }
 }
 
-
+// module one of project 5 (question 2) - create game with odds
 const createGame = async (req, res) => {
     try {
       const { name, sport, startTime, outcomes } = req.body;
