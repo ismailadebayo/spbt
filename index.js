@@ -4,9 +4,12 @@ const mongoose = require('mongoose')
 
 
 
-const betRoutes = require('./routes/betRoute');
+const betRoute = require('./routes/betRoute');
 const userRoute = require('./routes/userRoute')
-const gameRoute = require('./routes/')
+const gameRoute = require('./routes/gameRoute')
+const adminRoute =  require('./routes/adminRoute')
+
+
 
 
 
@@ -38,14 +41,10 @@ app.get('/', (req, res)=>{
     res.status(200).json({message: welcome })
 })
 
-app.use('/api/v1/createUser',  userRoute);
-app.use("/api/v1/login", userRoute)
-app.use('/api/v1/admin/createGame', gameRoute);
-app.use('/api/v1/admin/payOut', isAdmin, payOut );
-app.get('/api/v1/getUsers', userRoute)
-app.use('/api/v1/place-bet', betRoutes);
-app.use('/api/v1/bet-history', betRoutes);
-app.use('/api/v1/result/', gameResult);
+app.use('/api/v1/user',  userRoute);
+app.use('/api/v1/admin', adminRoute);
+app.use('/api/v1/bet', betRoute);
+app.use('/api/v1/game', gameRoute);
 
     
 mongoose.connect(MONGO_URI)
