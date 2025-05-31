@@ -43,8 +43,10 @@ app.use("/api/v1/login", userRoute)
 app.use('/api/v1/admin/createGame', gameRoute);
 app.use('/api/v1/admin/payOut', isAdmin, payOut );
 app.get('/api/v1/getUsers', userRoute)
-app.use('/bet', betRoutes);
+app.use('/api/v1/place-bet', betRoutes);
+app.use('/api/v1/bet-history', betRoutes);
 app.use('/api/v1/result/', gameResult);
+
     
 mongoose.connect(MONGO_URI)
 .then(()=>{
