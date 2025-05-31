@@ -6,6 +6,10 @@ const betSchema = new mongoose.Schema({
   outcome:  { type: mongoose.Schema.Types.ObjectId, ref: 'Outcome', required: true },
   amount:   { type: Number, required: true },
   potentialWin: { type: Number, required: true },
+  potentialPayout: { type: Number, required: true },
+  game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game', required: true },
+  stake: { type: Number, required: true },
+  odds: { type: Number, required: true },
   status:   { type: String, enum: ['pending', 'won', 'lost'], default: 'pending' },
   placedAt: { type: Date, default: Date.now }
 });
