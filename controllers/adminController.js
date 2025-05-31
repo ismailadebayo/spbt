@@ -1,7 +1,7 @@
-const Game = require('../models/Game');
-const Outcome = require('../models/Outcome');
-const Bet = require('../models/Bet');
-const User = require('../models/User');
+const Game = require('../models/gameSchema');
+const Outcome = require('../models/outcomeSchema');
+const Bet = require('../models/betSchema');
+const User = require('../models/userSchema');
 
 // module three of project 5 (question 2) - calculate payout and update wallet
 const payOut =  async (req, res) => {
@@ -92,7 +92,7 @@ const createGame = async (req, res) => {
   }
 
 
-modules.export = {
+module.export = {
     payOut,
     createGame
 }

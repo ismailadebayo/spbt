@@ -1,5 +1,5 @@
-const Game = require('../models/Game');
-const Outcome = require('../models/Outcome');
+const Game = require('../models/gameSchema');
+const Outcome = require('../models/outcomeSchema');
 
 // module three of project 5 (question 1) - set game result
 

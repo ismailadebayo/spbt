@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
-const User = require('./models/userSchema')
+const User = require('../models/userSchema')
 
 // module one of project 5 (question 1) - create user with login balanc
 const createUser = async (req, res) => {
